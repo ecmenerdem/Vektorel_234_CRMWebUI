@@ -1,0 +1,346 @@
+﻿@using Vektorel_234_CRMWebUI.Areas.AdminPanel.Models.User
+@model List<UserDTO>
+@{
+    ViewData["Title"] = "Kullanıcılar";
+    Layout = "~/Areas/AdminPanel/Views/Shared/_Layout.cshtml";
+}
+@Html.AntiForgeryToken()
+<div class="card">
+    <div class="card-header">
+        <div class="card-tools">
+            <a href="#" class="btn btn-primary btn-block mb-1" data-toggle="modal" data-target="#modal-AddUser">Yeni Kullanıcı</a>
+        </div>
+    </div>
+    <div class="card-body">
+
+        <table id="example1" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Ad</th>
+                    <th>Soyad</th>
+                    <th>E-Posta</th>
+                    <th>Grubu</th>
+                    <th>İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @{
+                    foreach (var item in Model)
+                    {
+                                                    <tr>
+                                                        <td>@item.Ad</td>
+                                                        <td>@item.Soyad</td>
+                                                        <td>@item.EPosta</td>
+                                                        <td>@item.GrupAdi</td>
+                                                        <td><button type="button" class="btn btn-block btn-warning btn-sm btnGetUserDetail" data-toggle="modal" data-target="#modal-UpdateUser" data-guid=@item.GUID data-grupguid="@item.GrupGUID">Görüntüle</button></td>
+                                                    </tr>
+                    }
+
+
+
+                }
+
+
+
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-UpdateUser">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="HUserFullName_Update"></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <label for="txtFirstname_Update" class="col-sm-2 col-form-label">Adı</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="txtFirstname_Update">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="txtLastname_Update" class="col-sm-2 col-form-label">Soyadı</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="txtLastname_Update">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="txtKullaniciAdi_Update" class="col-sm-2 col-form-label">Kullanıcı Adı</label>
+                    <div class="col-sm-10">
+                        <input type="text" disabled="disabled" class="form-control" id="txtKullaniciAdi_Update">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="txtSifre_Update" class="col-sm-2 col-form-label">Şifre</label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" id="txtSifre_Update">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="txtEPosta_Update" class="col-sm-2 col-form-label">E-Posta</label>
+                    <div class="col-sm-10">
+                        <input type="email" class="form-control" id="txtEPosta_Update">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="txtGrupAdi" class="col-sm-2 col-form-label">Grubu</label>
+                    <div class="col-sm-10" id="divUserGroup">
+                        @*                         @await Component.InvokeAsync("GroupDropDown")
+                        *@
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>
+                <button type="button" class="btn btn-primary" id="btnUpdateUser">Kaydet</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<div class="modal fade" id="modal-AddUser">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Yeni Kullanıcı Ekle</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <label for="txtFirstname_Add" class="col-sm-2 col-form-label">Adı</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="txtFirstname_Add">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="txtLastname_Add" class="col-sm-2 col-form-label">Soyadı</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="txtLastname_Add">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="txtKullaniciAdi" class="col-sm-2 col-form-label">Kullanıcı Adı</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="txtKullaniciAdi_Add">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="txtSifre_Add" class="col-sm-2 col-form-label">Şifre</label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" id="txtSifre_Add">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="txtEPosta" class="col-sm-2 col-form-label">E-Posta</label>
+                    <div class="col-sm-10">
+                        <input type="email" class="form-control" id="txtEPosta_Add">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="txtGrupAdi" class="col-sm-2 col-form-label">Grubu</label>
+                    <div class="col-sm-10" id="divUserGroup_Add">
+                        @await Component.InvokeAsync("GroupDropDown", new { userGroupGuid = Guid.Empty, ddlID ="ddlGroup_Add"})
+                        
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>
+                <button type="button" class="btn btn-primary" id="btnAddUser">Kaydet</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+<script>
+    $(function () {
+        $("#example1").DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": false,
+            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
+
+        $('.btnGetUserDetail').click(function () {
+            var guid = $(this).attr('data-guid');
+            var userGroupGuid = $(this).attr('data-grupguid');
+            var ddlID = "ddlGroup_Update"
+            $.ajax({
+                url: "/Admin/Kullanici/" + guid,
+                type: "get",
+                success: function (response) {
+                    $('#HUserFullName_Update').html('').append(response.Ad + " " + response.Soyad);
+                    $('#txtKullaniciAdi_Update').val(response.KullaniciAdi);
+                    $('#txtFirstname_Update').val(response.Ad);
+                    $('#txtLastname_Update').val(response.Soyad);
+                    $('#txtEPosta_Update').val(response.EPosta);
+                    $('#txtSifre_Update').val(response.Sifre);
+                    
+                    
+                    $.ajax({
+                        url: "/Admin/InvokeGroupDropDown",
+                        type: "get",
+                        data: { userGroupGuid, ddlID },
+                        success: function (result) {
+                            $('#divUserGroup').html('').append(result);
+                        }
+
+                    });
+
+                    $('#btnUpdateUser').attr('data-guid', guid)
+
+                },
+                Error: function (err) {
+                    Swal.fire({
+                        title: "HATA OLUŞTU!",
+                        text: err,
+                        icon: "error"
+                    });
+                }
+
+
+
+
+            });
+
+
+
+        });
+
+
+        $('#btnUpdateUser').click(function () {
+            userGUID = $(this).attr('data-guid');
+            var updateUserDTO = {
+                "Ad": $('#txtFirstname_Update').val(),
+                "Soyad": $('#txtLastname_Update').val(),
+                "EPosta": $('#txtEPosta_Update').val(),
+                "Sifre": $('#txtSifre_Update').val(),
+                "GrupGUID": $('#ddlGroup_Update').val(),
+                "UserGUID": userGUID
+
+            };
+
+            $.ajax({
+                url: "/Admin/UpdateUser",
+                type: "post",
+                data: { updateUserDTO },
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-Token", $('input:hidden[name="__RequestVerificationToken"]').val())
+                },
+                success: function (response) {
+                    console.log(response);
+                    if (response.success) {
+                        Swal.fire({
+                            title: "İşlem Başarılı!",
+                            html: "Kullanıcı Başarıyla Güncellenmiştir. Sayfa Tekrar Yükleniyor.",
+                            icon: "success",
+                            timer: 3000,
+                        }).then((result) => {
+                            window.location.reload();
+                        });
+
+                    }
+
+                    else {
+                        Swal.fire({
+                            title: "HATA OLUŞTU!",
+                            text: response.hataAciklama,
+                            icon: "error"
+                        });
+                    }
+
+                   
+
+                },
+                Error: function (err) {
+                    Swal.fire({
+                        title: "HATA OLUŞTU!",
+                        text: err,
+                        icon: "error"
+                    });
+                }
+
+
+
+
+            });
+
+        });
+
+        $('#btnAddUser').click(function () {
+            var userAddRequestDTO = {
+                "KullaniciAdi": $('#txtKullaniciAdi_Add').val(),
+                "Ad": $('#txtFirstname_Add').val(),
+                "Soyad": $('#txtLastname_Add').val(),
+                "EPosta": $('#txtEPosta_Add').val(),
+                "Sifre": $('#txtSifre_Add').val(),
+                "GrupGUID": $('#ddlGroup_Add').val(),
+            };
+
+            $.ajax({
+                url: "/Admin/AddUser",
+                type: "post",
+                data: { userAddRequestDTO },
+                beforeSend:function(xhr){
+                    xhr.setRequestHeader("XSRF-Token", $('input:hidden[name="__RequestVerificationToken"]').val())
+                },
+                success: function (response) {
+                    console.log(response);
+                    if (response.success) {
+                        Swal.fire({
+                            title: "İşlem Başarılı!",
+                            html: "Kullanıcı Başarıyla Eklenmiştir. Sayfa Tekrar Yükleniyor.",
+                            icon: "success",
+                            timer: 3000,
+                        }).then((result) => {
+                            window.location.reload();
+                        });
+
+                    }
+                    else {
+                        Swal.fire({
+                            title: "HATA OLUŞTU!",
+                            text: response.hataAciklama,
+                            icon: "error"
+                        });
+                    }
+
+                   
+
+                },
+                Error: function (err) {
+                    Swal.fire({
+                        title: "HATA OLUŞTU!",
+                        text: err,
+                        icon: "error"
+                    });
+                }
+
+
+
+
+            });
+
+        });
+
+    });
+
+</script>

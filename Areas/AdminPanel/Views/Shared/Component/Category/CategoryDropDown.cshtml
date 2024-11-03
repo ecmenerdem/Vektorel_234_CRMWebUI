@@ -1,0 +1,23 @@
+﻿@using Vektorel_234_CRMWebUI.Areas.AdminPanel.Models.Category
+@model CategoryDropDownViewModel
+<div class="form-group">
+    <select class="form-control select2" id="@Model.ddlCateogryElementID" style="width: 100%;">
+
+        @{
+            foreach (var item in Model.CategoryList)
+            {
+                if (Model.ProductCategoryGUID is not null && Model.ProductCategoryGUID == item.Guid)
+                {
+                    <option value="@item.Guid" selected>@item.KategoriAdi</option>
+                }
+                else
+                {
+                    <option value="@item.Guid">@item.KategoriAdi</option>
+
+                }
+            }
+
+
+        }
+    </select>
+</div>

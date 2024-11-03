@@ -1,0 +1,24 @@
+﻿@using Vektorel_234_CRMWebUI.Areas.AdminPanel.Models.Group
+@model GroupDropDownViewModel
+<div class="form-group">
+    <select class="form-control select2" id="@Model.ddlGroupID" style="width: 100%;">
+
+        @{
+            foreach (var item in Model.GroupList)
+            {
+                if (Model.UserGroupGuid is not null && Model.UserGroupGuid == item.Guid)
+                {
+                    <option value="@item.Guid" selected>@item.GrupAdi</option>
+                }
+                else
+                {
+                    <option value="@item.Guid">@item.GrupAdi</option>
+
+                }
+            }
+
+
+        }
+    </select>
+</div>
+
