@@ -36,7 +36,7 @@ namespace Vektorel_234_CRMWebUI.Areas.AdminPanel.Controllers
             var productList = responseObject.Data;
 
             //throw new Exception();
-            // Test amaçlı yazıldı
+            // Test amaçlı yazıldııı
             return View(productList);
 
         }
@@ -87,6 +87,7 @@ namespace Vektorel_234_CRMWebUI.Areas.AdminPanel.Controllers
         {
             if (productImage is not null)
             {
+                
                 string fileName = productImage.FileName.Split('.')[productImage.FileName.Split('.').Length - 2] +"_"+Guid.NewGuid()+"."+productImage.FileName.Split('.')[productImage.FileName.Split('.').Length-1];
 
                 string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "MediaUpload", fileName);
